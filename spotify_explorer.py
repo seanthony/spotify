@@ -76,7 +76,7 @@ def build_plot_data(genres, artists):
 def build_plot(data, name, genres, names, display):
     title = 'Related Artists for {} on Spotify'.format(name)
     p = figure(title=title,
-               x_axis_location="above", tools="hover,save",
+               x_axis_location="above", tools="save",
                x_range=genres, y_range=list(reversed(names)),)
 
     p.sizing_mode = "stretch_both"
