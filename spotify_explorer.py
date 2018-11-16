@@ -11,7 +11,7 @@ token = util.prompt_for_user_token(
 spotify = spotipy.Spotify(auth=token)
 
 
-name = 'Jason Molina'
+name = 'The National'
 artist = spotify.search(q='artist:' + name, type='artist')
 
 # if artist.get('artists', False) and artist['artists'].get('items', False) and artist['artists']['items'][0].get('id', False):
@@ -56,7 +56,8 @@ data = dict(
     # count=counts.flatten(),
 )
 
-p = figure(title="Related Artists on Spotify",
+title = 'Related Artists for {} on Spotify'.format(name)
+p = figure(title=title,
            x_axis_location="above", tools="hover,save",
            x_range=genres, y_range=list(reversed(names)),)
 #    tooltips=[('names', '@yname, @xname'), ('count', '@count')])
@@ -67,15 +68,18 @@ p.sizing_mode = "stretch_both"
 p.grid.grid_line_color = None
 p.axis.axis_line_color = None
 p.axis.major_tick_line_color = None
-p.axis.major_label_text_font_size = "5pt"
+p.axis.major_label_text_font_size = "10pt"
 p.axis.major_label_standoff = 0
 p.xaxis.major_label_orientation = np.pi / 3
 
-p.rect('xname', 'yname', 0.9, 0.9, source=data,
-       color='colors', alpha='alphas', line_color=None,
-       hover_line_color='black', hover_color='colors')
+# p.rect('xname', 'yname', 0.9, 0.9, source=data,
+#        color='colors', alpha='alphas', line_color=None,
+#        hover_line_color='black', hover_color='colors')
+p.circle('xname', 'yname', source=data, size=15,
+         color='colors', alpha='alphas', line_color=None,
+         hover_line_color='black', hover_color='colors')
 
-title = 'Related Artists for {}'.format(name)
+
 output_file("index.html", title=title)
 
 show(p)  # show the plot
